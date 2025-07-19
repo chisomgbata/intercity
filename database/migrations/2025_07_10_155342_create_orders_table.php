@@ -10,14 +10,18 @@ return new class extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('tracking_id');
-            $table->string('item_name');
-            $table->integer('quantity');
-            $table->string('recipient_name');
-            $table->text('recipient_address');
-            $table->text('recipient_details')->nullable();
-            $table->text('info')->nullable();
-            $table->json('delivery_steps')->nullable();
-            $table->integer('current_step')->default(1);
+            $table->string('sender_name');
+            $table->string('sender_email')->nullable();
+            $table->string('sender_phone')->nullable();
+            $table->string('sender_address')->nullable();
+            $table->string('receiver_name');
+            $table->string('receiver_email')->nullable();
+            $table->string('receiver_phone')->nullable();
+            $table->string('receiver_address')->nullable();
+
+            $table->dateTime('date_shipped')->nullable();
+            $table->dateTime('arrival_date')->nullable();
+
 
             $table->timestamps();
         });
