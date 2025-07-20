@@ -10,17 +10,9 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'tracking_id',
-        'item_name', 'quantity', 'recipient_name', 'recipient_address', 'recipient_details', 'delivery_steps', 'current_step',
-        'info'
+        'tracking_id', 'sender_name', 'sender_email', 'sender_phone', 'sender_address', 'receiver_name', 'receiver_email', 'receiver_phone', 'receiver_address', 'country', 'origin', 'destination', 'item_weight', 'item_name', 'item_total_cost'
     ];
 
-    // create a created observer to set the tracking_id if not provided and also set the current_step to 1
-    protected $casts = [
-        'delivery_steps' => 'array',
-        'cancelled_at' => 'datetime',
-        'delivered_at' => 'datetime',
-    ];
 
     public static function boot(): void
     {
@@ -30,7 +22,6 @@ class Order extends Model
             if (empty($order->tracking_id)) {
                 $order->tracking_id = uniqid();
             }
-            $order->current_step = 1;
         });
     }
 }

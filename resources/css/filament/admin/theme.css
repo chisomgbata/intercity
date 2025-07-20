@@ -3,3 +3,41 @@
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
 
+.fi-topbar {
+    @apply print:hidden
+}
+
+.fi-sidebar {
+    @apply print:hidden
+}
+
+.fi-header {
+    @apply print:hidden
+}
+
+.fi-page-main > *:not(.fi-page-content) {
+    @apply print:hidden
+}
+
+.fi-page-content {
+    @apply print:block!
+}
+
+/*@page {*/
+/*    size: A4 portrait; !* Set paper size and orientation *!*/
+/*    margin: 0; !* Remove margins *!*/
+/*}*/
+
+/*!* You can also be more specific *!*/
+/*@page :first {*/
+/*    margin-top: 0;*/
+/*}*/
+
+/*@page :left {*/
+/*    margin-left: 0;*/
+/*}*/
+
+/*@page :right {*/
+/*    margin-right: 0;*/
+/*}*/
+

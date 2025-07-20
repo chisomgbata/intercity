@@ -70,7 +70,9 @@
 
                 <div class="flex justify-between items-center">
                     <!-- Barcode Section -->
-                    <svg id="barcode"></svg>
+                    <div wire:ignore>
+                        <svg id="barcode"></svg>
+                    </div>
 
                     <!-- InterCity Logo -->
                     <div class="text-center">
@@ -98,7 +100,7 @@
                     <div class="border border-gray-400 p-3">
                         <div class="text-xs text-gray-600 mb-1">Tracking Number:</div>
                         <input class="text-lg font-bold appearance-none outline-none w-full"
-                               wire:model="trackingId"></input>
+                               wire:model.blur="tracking_id"></input>
                     </div>
 
                     <!-- Sender Information -->
@@ -106,22 +108,22 @@
                         <div class="text-xs font-semibold text-gray-700 mb-2">SENDER INFORMATION</div>
                         <div class="text-sm space-y-1">
                             <div><span class="font-semibold w-full">NAME:</span>
-                                <input wire:model="sender_name" type="text"
+                                <input wire:model.blur="sender_name" type="text"
                                        class="appearance-none outline-none"
                                        placeholder="name"/>
                             </div>
-                            <div><span class="font-semibold">ADDRESS:</span> <input wire:model="sender_address"
+                            <div><span class="font-semibold">ADDRESS:</span> <input wire:model.blur="sender_address"
                                                                                     class="appearance-none outline-none"
                                                                                     placeholder="sender address"/>
                             </div>
                             <div><span class="font-semibold">Phone:</span>
 
-                                <input wire:model="sender_phone" type="tel"
+                                <input wire:model.blur="sender_phone" type="tel"
                                        class="appearance-none outline-none" placeholder="phone"/>
 
                                 <span
                                     class="font-semibold">Email:</span>
-                                <input wire:model="sender_email" type="email"
+                                <input wire:model.blur="sender_email" type="email"
                                        class="appearance-none outline-none" placeholder="sender email"/>
                             </div>
                         </div>
@@ -132,24 +134,25 @@
                         <div class="text-xs font-semibold text-gray-700 mb-2">RECEIVER'S INFORMATION</div>
                         <div class="text-sm space-y-1">
                             <div><span class="font-semibold">NAME:</span>
-                                <input wire:model="receiver_name" type="text" class="appearance-none outline-none"
+                                <input wire:model.blur="receiver_name" type="text" class="appearance-none outline-none"
                                        placeholder="receiver name"/>
                             </div>
-                            <div><span class="font-semibold">ADDRESS:</span> <input wire:model="receiver_address"
+                            <div><span class="font-semibold">ADDRESS:</span> <input wire:model.blur="receiver_address"
                                                                                     class="appearance-none outline-none"
                                                                                     placeholder="receiver address"/>
                             </div>
                             <div><span class="font-semibold">Phone:</span>
-                                <input wire:model="receiver_phone" type="tel" class="appearance-none outline-none"
+                                <input wire:model.blur="receiver_phone" type="tel" class="appearance-none outline-none"
                                        placeholder="receiver phone"/>
                             </div>
                             <div><span class="font-semibold">Email:</span>
-                                <input wire:model="receiver_email" type="email" class="appearance-none outline-none"
+                                <input wire:model.blur="receiver_email" type="email"
+                                       class="appearance-none outline-none"
                                        placeholder="receiver email"/>
                             </div>
                             <div><span class="font-semibold">Country:</span>
 
-                                <input wire:model="country" type="text" class="appearance-none outline-none"
+                                <input wire:model.blur="country" type="text" class="appearance-none outline-none"
                                        placeholder="country"/>
 
                             </div>
@@ -176,11 +179,11 @@
                             <div>World Mail Three Days Dispatch</div>
                             <div>Express Diplomatic Goods World State Value Family Treasure</div>
                             <div>Origin:
-                                <input wire:model="origin" type="text" class="appearance-none outline-none"
+                                <input wire:model.blur="origin" type="text" class="appearance-none outline-none"
                                        placeholder="origin"/>
                             </div>
                             <div>Destination:
-                                <input wire:model="destination" type="text" class="appearance-none outline-none"
+                                <input wire:model.blur="destination" type="text" class="appearance-none outline-none"
                                        placeholder="desitination"/>
                             </div>
                         </div>
@@ -202,11 +205,12 @@
                             <tr>
                                 <td class="border border-gray-400 p-2">1</td>
                                 <td class="border border-gray-400 p-2">
-                                    <input wire:model="item_name" type="text" class="appearance-none outline-none"
+                                    <input wire:model.blur="item_name" type="text" class="appearance-none outline-none"
                                            placeholder="item_name"/>
                                 </td>
                                 <td class="border border-gray-400 p-2">
-                                    <input wire:model="item_weight" type="text" class="appearance-none outline-none"
+                                    <input wire:model.blur="item_weight" type="text"
+                                           class="appearance-none outline-none"
                                            placeholder="item_weight"/>
                                 </td>
                             </tr>
@@ -214,7 +218,8 @@
                                 <td class="border border-gray-400 p-2"></td>
                                 <td class="border border-gray-400 p-2 font-semibold">Total</td>
                                 <td class="border border-gray-400 p-2 font-semibold">
-                                    <input wire:model="item_total_cost" type="text" class="appearance-none outline-none"
+                                    <input wire:model.blur="item_total_cost" type="text"
+                                           class="appearance-none outline-none"
                                            placeholder="total price"/>
                                     USD
                                 </td>
@@ -257,7 +262,7 @@
 
 @script
 <script>
-    JsBarcode("#barcode", $wire.trackingId, {
+    JsBarcode("#barcode", "{{uniqid()}}", {
         displayValue: false,
         height: 40,
         width: 1,
