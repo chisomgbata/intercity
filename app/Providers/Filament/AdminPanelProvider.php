@@ -56,7 +56,7 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])->viteTheme('resources/css/filament/admin/theme.css')->assets([
 
-            ])->breadcrumbs(false);
+            ])->breadcrumbs(false)->darkMode(false);
 
     }
 }
