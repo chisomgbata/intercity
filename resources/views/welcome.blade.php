@@ -83,7 +83,7 @@
 
 <!-- Header & Navigation -->
 <header x-data="{ mobileMenuOpen: false }"
-        class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-md">
+        class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-10 shadow-md">
     <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
         <!-- Logo -->
         <a href="#" class="flex items-center space-x-2">

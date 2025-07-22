@@ -3,41 +3,47 @@
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
 
-.fi-topbar {
-    @apply print:hidden
+/*
+     =====================================================================
+     HTML2CANVAS COMPATIBILITY OVERRIDES
+     This block forces standard hex color values for elements inside
+     the receipt container, fixing the "oklch" parsing error.
+     =====================================================================
+   */
+
+/* Main container background */
+#receipt-container.bg-yellow-50 {
+    background-color: #fefce8 !important;
 }
 
-.fi-sidebar {
-    @apply print:hidden
+/* Text colors */
+#receipt-container .text-gray-600 {
+    color: #4b5563 !important;
 }
 
-.fi-header {
-    @apply print:hidden
+#receipt-container .text-gray-700 {
+    color: #374151 !important;
 }
 
-.fi-page-main > *:not(.fi-page-content) {
-    @apply print:hidden
+#receipt-container .text-gray-800 {
+    color: #1f2937 !important;
 }
 
-.fi-page-content {
-    @apply print:block!
+/* Border colors */
+#receipt-container .border-gray-300 {
+    border-color: #d1d5db !important;
 }
 
-/*@page {*/
-/*    size: A4 portrait; !* Set paper size and orientation *!*/
-/*    margin: 0; !* Remove margins *!*/
-/*}*/
+#receipt-container .border-gray-400 {
+    border-color: #9ca3af !important;
+}
 
-/*!* You can also be more specific *!*/
-/*@page :first {*/
-/*    margin-top: 0;*/
-/*}*/
+/* Background colors for inner elements */
+#receipt-container .bg-gray-100 {
+    background-color: #f3f4f6 !important;
+}
 
-/*@page :left {*/
-/*    margin-left: 0;*/
-/*}*/
-
-/*@page :right {*/
-/*    margin-right: 0;*/
-/*}*/
-
+/* Ensure barcode background is transparent */
+#receipt-container #barcode {
+    background: transparent !important;
+}

@@ -61,9 +61,12 @@
 
 
     </style>
+
+
     <div class="flex flex-col lg:flex-row gap-2">
 
-        <div id="receipt" class=" w-full bg-yellow-50 border border-gray-300">
+
+        <div id="receipt-container" class=" w-full bg-yellow-50 border border-gray-300">
             <!-- Header -->
             <div class="bg-yellow-50 p-4 border-b border-gray-300">
                 <div class="text-sm text-gray-600 mb-2">Intercity Way Bill Shipment</div>
@@ -85,9 +88,23 @@
                     <!-- Date Information -->
                     <div class="text-right text-sm text-gray-600">
                         <div>Date shipped:</div>
-                        <div class="font-semibold">11 December 2024</div>
-                        <div class="mt-2">Arrival Date:</div>
-                        <div class="font-semibold">DECEMBER, 13 2024</div>
+                        <div class="font-semibold cursor-pointer"
+                             onclick="document.getElementById('date_shipped_picker').showPicker()">
+                            {{$date_shipped->format('F, d Y')}}
+                            <input type="date"
+                                   id="date_shipped_picker"
+                                   wire:model.live="date_shipped"
+                                   class="absolute opacity-0 pointer-events-none"/>
+                        </div>
+                        <div>Arrival Date:</div>
+                        <div class="font-semibold cursor-pointer"
+                             onclick="document.getElementById('arrival_date_picker').showPicker()">
+                            {{$arrival_date->format('F, d Y')}}
+                            <input type="date"
+                                   id="arrival_date_picker"
+                                   wire:model.live="arrival_date"
+                                   class="absolute opacity-0 pointer-events-none"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -268,6 +285,42 @@
         width: 1,
         background: "#ffffff00"
     });
+
+    const downloadBtn = document.getElementById('download-btn');
+    const receiptContainer = document.getElementById('receipt-container');
+
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', () => {
+            html2canvas(receiptContainer, {
+                useCORS: true,
+                scale: 4,
+                onclone: (clonedDocument) => {
+                    // Copy the current values from your text inputs.
+                    const originalInputs = receiptContainer.querySelectorAll('input');
+                    const clonedInputs = clonedDocument.querySelectorAll('input');
+                    originalInputs.forEach((input, index) => {
+                        clonedInputs[index].value = input.value;
+                    });
+
+                    // Ensure the dynamically updated signature is captured.
+                    const originalSignature = receiptContainer.querySelector('.signature');
+                    const clonedSignature = clonedDocument.querySelector('.signature');
+                    if (originalSignature && clonedSignature) {
+                        clonedSignature.textContent = originalSignature.textContent;
+                    }
+                }
+            }).then(canvas => {
+
+                const link = document.createElement('a');
+
+                link.href = canvas.toDataURL('image/png');
+
+                link.download = 'receipt.png';
+
+                link.click();
+            });
+        });
+    }
 
 
 </script>

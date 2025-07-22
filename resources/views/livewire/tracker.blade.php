@@ -31,7 +31,7 @@
             <div wire:show="modalOpen"
                  x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
                  x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
-                 class="flex max-w-xl w-xl flex-col gap-4 overflow-hidden rounded-lg  bg-white ">
+                 class="flex max-w-xl w-xl flex-col gap-4 overflow-hidden rounded-lg  bg-white z-[999999] ">
                 <!-- Dialog Body -->
                 <div class="px-4 py-8 w-full">
 
@@ -51,6 +51,15 @@
 
                                 <!-- Recipient Info -->
                                 <div class="mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Sender Information</h3>
+                                    <div class="bg-gray-50 rounded-md p-4">
+                                        <p class="font-medium text-gray-700">{{ $order->sender_name }}</p>
+                                        <p class="text-gray-600 text-sm mt-1">{{ $order->sender_phone }}</p>
+                                    </div>
+                                </div>
+
+                                <!-- Recipient Info -->
+                                <div class="mb-6">
                                     <h3 class="text-lg font-semibold text-gray-800 mb-2">Delivery Information</h3>
                                     <div class="bg-gray-50 rounded-md p-4">
                                         <p class="font-medium text-gray-700">{{ $order->receiver_name }}</p>
@@ -58,66 +67,77 @@
                                     </div>
                                 </div>
 
-                                {{--                                <!-- Delivery Steps -->--}}
-                                {{--                                <div class="mb-6">--}}
-                                {{--                                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Delivery Progress</h3>--}}
-                                {{--                                    <div class="space-y-6">--}}
-                                {{--                                        @foreach($order->delivery_steps as $index => $step)--}}
-                                {{--                                            @php--}}
-                                {{--                                                $stepNumber = $index + 1;--}}
-                                {{--                                                $isCompleted = $stepNumber <= $order->current_step;--}}
-                                {{--                                                $isCurrent = $stepNumber == $order->current_step;--}}
-                                {{--                                            @endphp--}}
 
-                                {{--                                            <div class="flex items-center">--}}
-                                {{--                                                <!-- Step Icon -->--}}
-                                {{--                                                <div--}}
-                                {{--                                                    class="flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center mr-4 {{ $isCompleted ? 'bg-green-500 border-green-500' : 'bg-gray-200 border-gray-300' }}">--}}
-                                {{--                                                    @if($isCompleted && !$isCurrent)--}}
-                                {{--                                                        <i class="fas fa-check text-white text-sm"></i>--}}
-                                {{--                                                    @elseif($isCurrent)--}}
-                                {{--                                                        <span--}}
-                                {{--                                                            class="text-white text-sm font-bold">{{ $stepNumber }}</span>--}}
-                                {{--                                                    @else--}}
-                                {{--                                                        <span--}}
-                                {{--                                                            class="text-gray-500 text-sm font-bold">{{ $stepNumber }}</span>--}}
-                                {{--                                                    @endif--}}
-                                {{--                                                </div>--}}
+                                <!-- Delivery Steps -->
+                                <div class="mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Delivery Progress</h3>
+                                    <div class="space-y-6">
 
-                                {{--                                                <!-- Step Content -->--}}
-                                {{--                                                <div class="flex-1 flex gap-2 items-center">--}}
-                                {{--                                                    <p class="font-medium {{ $isCompleted ? 'text-green-700' : 'text-gray-700' }}">--}}
-                                {{--                                                        {{ $step['step_name'] ?? $step }}--}}
-                                {{--                                                    </p>--}}
-                                {{--                                                    @if($isCurrent)--}}
-                                {{--                                                        <span--}}
-                                {{--                                                            class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mt-1">Current</span>--}}
-                                {{--                                                    @endif--}}
-                                {{--                                                </div>--}}
+                                            <?php
+                                            $deliverySteps = $order::STEPS;
+                                            $currentStep = $order->progress
 
-                                {{--                                                <!-- Connecting Line -->--}}
-                                {{--                                                @if(!$loop->last)--}}
-                                {{--                                                    <div--}}
-                                {{--                                                        class="absolute left-4 mt-8 w-0.5 h-4 {{ $stepNumber < $order->current_step ? 'bg-green-500' : 'bg-gray-300' }}"></div>--}}
-                                {{--                                                @endif--}}
-                                {{--                                            </div>--}}
-                                {{--                                        @endforeach--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
+                                            ?>
 
-                                {{--                                <!-- Status Footer -->--}}
-                                {{--                                <div class="border-t pt-4">--}}
-                                {{--                                    <div class="flex items-center text-blue-600">--}}
-                                {{--                                        <i class="fas fa-circle-exclamation mr-2"></i>--}}
-                                {{--                                        <span class="font-medium">--}}
-                                {{--                                                    @if($order->info)--}}
-                                {{--                                                {{ $order->info }}--}}
-                                {{--                                            @else--}}
-                                {{--                                                Your package is on its way!--}}
-                                {{--                                            @endif--}}
-                                {{--                                        </span>--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
+                                        @foreach($deliverySteps as $index => $step)
+                                            @php
+                                                $stepNumber = $index + 1;
+                                                $isCompleted = $stepNumber < $currentStep;
+                                                $isCurrent = $stepNumber == $currentStep;
+                                            @endphp
+
+                                            <div class="flex items-center relative">
+                                                <!-- Step Icon -->
+                                                <div
+                                                    class="flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center mr-4 {{$stepNumber == 5 && $isCurrent ? 'bg-yellow-500 border-yellow-500' :( $isCompleted ? 'bg-green-500 border-green-500' : ($isCurrent ? 'bg-blue-500 border-blue-500' : 'bg-gray-200 border-gray-300')) }}">
+                                                    @if($isCompleted)
+                                                        <i class="fas fa-check text-white text-sm"></i>
+                                                    @elseif($isCurrent)
+                                                        <span
+                                                            class="text-white text-sm font-bold">{{ $stepNumber }}</span>
+                                                    @else
+                                                        <span
+                                                            class="text-gray-500 text-sm font-bold">{{ $stepNumber }}</span>
+                                                    @endif
+                                                </div>
+
+                                                <!-- Step Content -->
+                                                <div class="flex-1 flex gap-2 items-center">
+                                                    <p class="font-medium {{  $stepNumber == 5 && $isCurrent ? 'text-yellow-700' : ($isCompleted ? 'text-green-700' : ($isCurrent ? 'text-blue-700' : 'text-gray-700')) }}">
+                                                        {{$stepNumber == 5 && $isCurrent ? 'There is an issue clearing your package' : $step }}
+                                                    </p>
+                                                    @if($isCurrent)
+                                                        <span
+                                                            class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Current</span>
+                                                    @elseif($isCompleted)
+                                                        <span
+                                                            class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Completed</span>
+                                                    @endif
+                                                </div>
+
+                                                <!-- Connecting Line -->
+                                                @if(!$loop->last)
+                                                    <div
+                                                        class="absolute left-4 mt-16 w-0.5 h-8 {{ $isCompleted ? 'bg-green-500' : 'bg-gray-300' }}"></div>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <!-- Status Footer -->
+                                <div class="border-t pt-4">
+                                    <div class="flex items-center text-blue-600">
+                                        <i class="fas fa-circle-exclamation mr-2"></i>
+                                        <span class="font-medium">
+                                                                                    @if($order->progress == 5)
+                                                There is an issue with your package!
+                                            @else
+                                                Your package is on its way!
+                                            @endif
+                                                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         @else
 

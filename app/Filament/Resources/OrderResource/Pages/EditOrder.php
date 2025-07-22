@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
+use DateTime;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 
@@ -28,11 +29,15 @@ class EditOrder extends Page
     public string $item_weight = "10KG";
     public string $item_name = "PACKAGE";
     public string $item_total_cost = "100.00";
+    public DateTime $date_shipped;
+    public DateTime $arrival_date;
 
     protected string $view = 'filament.resources.order-resource.pages.edit-order';
 
-    public function updated(): void
+
+    public function updated($property): void
     {
+
         $this->record->update([
             'tracking_id' => $this->tracking_id,
             'sender_name' => $this->sender_name,
@@ -49,6 +54,8 @@ class EditOrder extends Page
             'item_weight' => $this->item_weight,
             'item_name' => $this->item_name,
             'item_total_cost' => $this->item_total_cost,
+            'date_shipped' => $this->date_shipped,
+            'arrival_date' => $this->arrival_date,
         ]);
 
     }
@@ -72,6 +79,8 @@ class EditOrder extends Page
         $this->item_weight = $this->record->item_weight ?? $this->item_weight;
         $this->item_name = $this->record->item_name ?? $this->item_name;
         $this->item_total_cost = $this->record->item_total_cost ?? $this->item_total_cost;
+        $this->date_shipped = $this->record->date_shipped ?? now()->toDate();
+        $this->arrival_date = $this->record->arrival_date ?? now()->toDate();
 
     }
 }
