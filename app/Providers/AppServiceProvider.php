@@ -15,7 +15,6 @@ class AppServiceProvider extends ServiceProvider
     {
         FilamentAsset::register([
             Js::make('custom-script', asset('js/barcode.js')),
-            Js::make('custom-script-two', asset('js/html2canvas.js')),
         ]);
     }
 

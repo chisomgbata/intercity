@@ -3,47 +3,48 @@
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
 
-/*
-     =====================================================================
-     HTML2CANVAS COMPATIBILITY OVERRIDES
-     This block forces standard hex color values for elements inside
-     the receipt container, fixing the "oklch" parsing error.
-     =====================================================================
-   */
 
-/* Main container background */
-#receipt-container.bg-yellow-50 {
-    background-color: #fefce8 !important;
-}
+/*!**/
+/*     =====================================================================*/
+/*     HTML2CANVAS COMPATIBILITY OVERRIDES*/
+/*     This block forces standard hex color values for elements inside*/
+/*     the receipt container, fixing the "oklch" parsing error.*/
+/*     =====================================================================*/
+/*   *!*/
 
-/* Text colors */
-#receipt-container .text-gray-600 {
-    color: #4b5563 !important;
-}
+/*!* Main container background *!*/
+/*#receipt-container.bg-yellow-50 {*/
+/*    background-color: #fefce8 !important;*/
+/*}*/
 
-#receipt-container .text-gray-700 {
-    color: #374151 !important;
-}
+/*!* Text colors *!*/
+/*#receipt-container .text-gray-600 {*/
+/*    color: #4b5563 !important;*/
+/*}*/
 
-#receipt-container .text-gray-800 {
-    color: #1f2937 !important;
-}
+/*#receipt-container .text-gray-700 {*/
+/*    color: #374151 !important;*/
+/*}*/
 
-/* Border colors */
-#receipt-container .border-gray-300 {
-    border-color: #d1d5db !important;
-}
+/*#receipt-container .text-gray-800 {*/
+/*    color: #1f2937 !important;*/
+/*}*/
 
-#receipt-container .border-gray-400 {
-    border-color: #9ca3af !important;
-}
+/*!* Border colors *!*/
+/*#receipt-container .border-gray-300 {*/
+/*    border-color: #d1d5db !important;*/
+/*}*/
 
-/* Background colors for inner elements */
-#receipt-container .bg-gray-100 {
-    background-color: #f3f4f6 !important;
-}
+/*#receipt-container .border-gray-400 {*/
+/*    border-color: #9ca3af !important;*/
+/*}*/
 
-/* Ensure barcode background is transparent */
-#receipt-container #barcode {
-    background: transparent !important;
-}
+/*!* Background colors for inner elements *!*/
+/*#receipt-container .bg-gray-100 {*/
+/*    background-color: #f3f4f6 !important;*/
+/*}*/
+
+/*!* Ensure barcode background is transparent *!*/
+/*#receipt-container #barcode {*/
+/*    background: transparent !important;*/
+/*}*/

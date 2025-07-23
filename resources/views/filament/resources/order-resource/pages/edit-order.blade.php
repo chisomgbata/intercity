@@ -1,4 +1,6 @@
 <x-filament-panels::page>
+
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;600;700&display=swap');
 
@@ -169,8 +171,10 @@
                             </div>
                             <div><span class="font-semibold">Country:</span>
 
-                                <input wire:model.blur="country" type="text" class="appearance-none outline-none"
+                                <input wire:model.blur="country" type="text"
+                                       class="appearance-none outline-none "
                                        placeholder="country"/>
+
 
                             </div>
                         </div>
@@ -274,11 +278,19 @@
 
     </div>
 
+    <button id="download-btn" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
+        Download as Image
+    </button>
+
+    @vite('resources/js/htmlcanvas.js')
+
 
 </x-filament-panels::page>
 
 @script
 <script>
+
+
     JsBarcode("#barcode", "{{uniqid()}}", {
         displayValue: false,
         height: 40,
@@ -291,24 +303,20 @@
 
     if (downloadBtn) {
         downloadBtn.addEventListener('click', () => {
+
+            const textInputs = receiptContainer.querySelectorAll('input');
+
+            textInputs.forEach(input => {
+                const span = document.createElement('span');
+                span.textContent = input.value;
+                input.replaceWith(span);
+            });
+
             html2canvas(receiptContainer, {
                 useCORS: true,
-                scale: 4,
-                onclone: (clonedDocument) => {
-                    // Copy the current values from your text inputs.
-                    const originalInputs = receiptContainer.querySelectorAll('input');
-                    const clonedInputs = clonedDocument.querySelectorAll('input');
-                    originalInputs.forEach((input, index) => {
-                        clonedInputs[index].value = input.value;
-                    });
+                scale: 2,
+                letterRendering: true
 
-                    // Ensure the dynamically updated signature is captured.
-                    const originalSignature = receiptContainer.querySelector('.signature');
-                    const clonedSignature = clonedDocument.querySelector('.signature');
-                    if (originalSignature && clonedSignature) {
-                        clonedSignature.textContent = originalSignature.textContent;
-                    }
-                }
             }).then(canvas => {
 
                 const link = document.createElement('a');
@@ -318,7 +326,11 @@
                 link.download = 'receipt.png';
 
                 link.click();
-            });
+            }).finally(function () {
+                location.reload()
+            })
+
+
         });
     }
 

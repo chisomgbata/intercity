@@ -78,12 +78,42 @@
     @livewireStyles
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        .goog-te-gadget img {
+            display: none !important;
+        }
+
+        body > .skiptranslate {
+            display: none;
+        }
+
+        body {
+            top: 0px !important;
+        }
+    </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
+
 
 <!-- Header & Navigation -->
 <header x-data="{ mobileMenuOpen: false }"
         class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-10 shadow-md">
+
+    <div id="google-tr" class="no-tailwind">
+        <div id="google_translate_element" style="padding:1em;"></div>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({
+                    pageLanguage: 'en',
+                    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+                }, 'google_translate_element');
+            }
+        </script>
+        <script type="text/javascript"
+                src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    </div>
+    </div>
     <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
         <!-- Logo -->
         <a href="#" class="flex items-center space-x-2">
